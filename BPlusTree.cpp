@@ -1,4 +1,6 @@
 // BPlusTree.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// Todo: Comments
+// Todo: To delete the pointer! and use reference for minnecessary
 
 #include <fstream>
 #include <iostream>
@@ -7,40 +9,51 @@
 #include <vector>
 #include <typeinfo>
 
-const int gOrder = 4;//the max children of a internal node, leaf also has 4, but last 1 for sibling
+// Order is the max children of a internal node, leaf also has 4, but last 1 for sibling
+static const int gOrder{ 4 };
+static const int gMinDegree{ (int)(gOrder / 2 + 0.5) };
+static const int gMaxDegree{ gOrder };
 
-
-//Base class for internal and leaf node
-//To delete the pointer!
 class node {
 public:
+	// Constructor
 	node();
-	node(node* parentPtr);
-	void set_parent_ptr(node* parentPtr);
+	node(node*);
+	// Setter and Getter
+	void set_parent_ptr(node*);
 	node* get_parent_ptr();
 	std::string get_first_key();
-	int get_keys_size();
-	virtual bool is_max() = 0;
+	virtual int get_values_size() = 0;// get the size of children or records
+	// Check node status
+	virtual bool upper_bound() = 0;
+	virtual bool lower_bound() = 0;
 	virtual bool is_leaf() = 0;
-	//Parse any key to compare
-	//virtual node* query_next_ptr(int index) = 0;
-	virtual node* query_key(std::string key) = 0;
-	static int compare_key(std::string sub, std::string obj);
+	// Support querying and inserting
+	virtual node* parse_key(std::string) = 0;
+	//virtual node* insert(std::string&, node*) = 0;
+	virtual void print() = 0;
 private:
 protected:
-	virtual void add_key(std::string newKey);
 	node* mParentPtr;
 	std::vector<std::string> mKeys;
+	// Setter and Getter
+	void set_key(std::string);
+	void set_keys();
+	void set_keys(std::vector<std::string>);
+	std::vector<std::string> get_keys();
+	// Support querying and inserting
+	static int compare_key(std::string, std::string);
+	//virtual void split(std::vector<std::string>&, std::vector<node*>&) = 0;
 };
 
 node::node() {
 	set_parent_ptr(NULL);
-	mKeys.reserve(gOrder - 1);//round_up(order / 2) - 1 <= number of keys <= order - 1
+	mKeys.reserve(gMaxDegree - 1);// maxNumKeys = maxDegree - 1
 }
 
 node::node(node* parentPtr) {
 	set_parent_ptr(parentPtr);
-	mKeys.reserve(gOrder - 1);//round_up(order / 2) - 1 <= number of keys <= order - 1
+	mKeys.reserve(gMaxDegree - 1);// maxNumKeys = maxDegree - 1
 }
 
 void node::set_parent_ptr(node* parentPtr) {
@@ -51,128 +64,272 @@ node* node::get_parent_ptr() {
 	return mParentPtr;
 }
 
-std::string node::get_first_key() {//should be min key
+std::string node::get_first_key() {
 	return mKeys.front();
 }
 
-int node::get_keys_size() {
-	return mKeys.size();
-}
-
-int node::compare_key(std::string subStr, std::string objStr) {
-	for (int i = 0; i < subStr.length(); i++) {
-		if (subStr[i] > objStr[i]) return 1;//sub > obj
-	}
-	if (subStr == objStr) return 0;//sub = obj
-	else return -1;//sub < obj
-}
-
-void node::add_key(std::string newKey) {
+void node::set_key(std::string newKey) {
 	mKeys.push_back(newKey);
+}
+
+void node::set_keys() {
+	mKeys.clear();
+	mKeys.reserve(gMaxDegree - 1);
+}
+
+void node::set_keys(std::vector<std::string> newKeys) {
+	mKeys = newKeys;
+}
+
+std::vector<std::string> node::get_keys() {
+	return mKeys;
+}
+/// <summary>
+/// Compares two String keys and returns an integer that indicates comparative relationship.
+/// </summary>
+int node::compare_key(std::string subKey, std::string objKey) {
+	for (int i = 0; i < subKey.length(); i++) {
+		if (subKey[i] > objKey[i]) return 1;// sub > obj
+	}
+	if (subKey == objKey) return 0;// sub = obj
+	else return -1;// sub < obj
 }
 
 class non_leaf : public node {
 	using node::node;
 public:
-	non_leaf();
-	non_leaf(std::vector<node*>* childPtrs);
-	node* get_child_ptr(int index);
-	//int get_children_size();//also key size => remove?
-	bool is_max();
+	// Constructor
+	non_leaf(std::string, node*, node*);
+	non_leaf(node*, std::vector<std::string>, std::vector<node*>);
+	// Setter and Getter
+	int get_values_size();
+	// Check node status
+	// bool is_root();
+	bool upper_bound();
+	bool lower_bound();
 	bool is_leaf();
-	//bool is_root();
-	node* query_key(std::string key);
-	void add_child_ptr(node* newChildPtr);
+	// Support querying and inserting
+	node* parse_key(std::string);
+	node* insert(std::string&, node*);
 	void print();
 private:
 	std::vector<node*> mChildPtrs;
+	// Setter and Getter
+	void set_child_ptr(node*);
+	node* get_child_ptr(int);
+	void set_child_ptrs();
+	void set_child_ptrs(std::vector<node*>);
+	std::vector<node*> get_child_ptrs();
+	// Support querying and inserting
+	void split(std::vector<std::string>&, std::vector<node*>&);
 };
 
-non_leaf::non_leaf() : node() {
-	mChildPtrs.reserve(gOrder);
+//For root only
+non_leaf::non_leaf(std::string key0, node* leafPtr0, node* leafPtr1) : node() {
+	mChildPtrs.reserve(gMaxDegree);
+	mChildPtrs.push_back(leafPtr0);
+	mKeys.push_back(key0);
+	mChildPtrs.push_back(leafPtr1);
 }
 
-non_leaf::non_leaf(std::vector<node*>* childPtrs) : non_leaf() {
-	std::vector<node*>::iterator it;
-	for (it = childPtrs->begin(); it != childPtrs->end(); it++) {
-		add_child_ptr(*it);
-	}
+non_leaf::non_leaf(node* parentPtr, std::vector<std::string> newKeys, std::vector<node*> newChildPtrs) : node(parentPtr) {
+	mChildPtrs.reserve(gMaxDegree);
+	mKeys = newKeys;
+	mChildPtrs = newChildPtrs;
 }
 
-//excpt max, also needs to check min
-bool non_leaf::is_max() {
-	return mChildPtrs.size() == gOrder;
+int non_leaf::get_values_size() {
+	return mChildPtrs.size();
+}
+
+bool non_leaf::upper_bound() {
+	return mChildPtrs.size() == gMaxDegree;
+}
+
+bool non_leaf::lower_bound() {
+	return mChildPtrs.size() >= gMinDegree;
 }
 
 bool non_leaf::is_leaf() {
 	return false;
 }
 
-//Input a key and it will return a avalaible child index for next internal or leaf or record
-//Also return -1 means no, you fool, cannot be no key from rule
-node* non_leaf::query_key(std::string key) {
-	std::string objStr;
-	//Traverse the keys
+/// <summary>
+/// Compares each string key and returns a pointer to the children node.
+/// </summary>
+node* non_leaf::parse_key(std::string key) {
 	std::vector<std::string>::iterator it;
 	int i = 0;
 	for (it = mKeys.begin(); it != mKeys.end(); it++, i++) {
-		objStr = *it;
-		int result = compare_key(key, objStr);
+		int result = compare_key(key, *it);
 		if (result < 0) return get_child_ptr(i);
 		else if (result == 0) return get_child_ptr(i++);
 	}
-	return get_child_ptr(i);//return the last index
+	return get_child_ptr(i);// return the right-most children
 }
 
-void non_leaf::add_child_ptr(node* newChildPtr) {
-	if (!is_max())
-		mChildPtrs.push_back(newChildPtr);
-	else//to do split
-		std::cout << "Warning: You CANNOT go here now." << std::endl;
-}
-
-node* non_leaf::get_child_ptr(int index) {
-	return mChildPtrs.at(index);
+/// <summary>
+/// Inserts the key and pointer into the corresponding position and returns parent pointer or NULL.
+/// </summary>
+node* non_leaf::insert(std::string& newKey, node* newChildPtr) {
+	// Constructs two new vectors to contain the original and new value.
+	std::vector<std::string>::iterator keyIt;
+	std::vector<node*>::iterator childPtrsIt = mChildPtrs.begin();
+	std::vector<std::string> tempKeys;
+	tempKeys.reserve(gMaxDegree);// extra one for potential splitting
+	std::vector<node*> tempChildPtrs;
+	tempChildPtrs.reserve(gMaxDegree + 1);// extra one for potential splitting
+	// Traverses the current vectors and finds a suitable position for new value.
+	// For a inserting key, it always comes with a right-side new pointer, and the left-side is orignial.
+	tempChildPtrs.push_back(*childPtrsIt);
+	childPtrsIt++;
+	for (keyIt; keyIt != get_keys().end(); keyIt++, childPtrsIt++) {
+		if (compare_key(newKey, *keyIt) < 0) {
+			tempKeys.push_back(newKey);
+			tempChildPtrs.push_back(newChildPtr);
+		}
+		tempKeys.push_back(*keyIt);
+		tempChildPtrs.push_back(*childPtrsIt);
+	}
+	if (compare_key(newKey, tempKeys.back()) > 0) {
+		tempKeys.push_back(newKey);
+		tempChildPtrs.push_back(newChildPtr);
+	}
+	// If the vectors are not full, add the record.
+	if (tempKeys.size() < gMaxDegree) {
+		set_keys(tempKeys);
+		set_child_ptrs(tempChildPtrs);
+		return NULL;// NULL need to continue
+	}
+	// Otherwise, split the vectors.
+	else {
+		split(tempKeys, tempChildPtrs);
+		// Get the new key and child pointer for next inserting.
+		newKey = tempKeys.back();
+		newChildPtr = tempChildPtrs.back();
+		return get_parent_ptr();// continue to insert to parent
+	}
 }
 
 void non_leaf::print() {
-	std::vector<std::string>::iterator keysIt = mKeys.begin();
-	std::vector<node*>::iterator childIt = mChildPtrs.begin();
-	while (childIt != mChildPtrs.end()) {
-		std::cout << /**keysIt <<*/ "    " << *childIt << " | ";
-		//keysIt++;
-		childIt++;
+	std::vector<std::string>::iterator keysIt = get_keys().begin();
+	std::vector<node*>::iterator childPtrsIt = get_child_ptrs().begin();
+	std::cout << "Child: " << *childPtrsIt << " | ";
+	childPtrsIt++;
+	while (keysIt != get_keys().end()) {
+		std::cout << "key: " << *keysIt << " | " << "Child: " << *childPtrsIt << " | ";
+		keysIt++;
+		childPtrsIt++;
 	}
 	std::cout << std::endl;
+}
+
+void non_leaf::set_child_ptr(node* newChildPtr) {
+	if (upper_bound()) return;
+	mChildPtrs.push_back(newChildPtr);
+}
+
+node* non_leaf::get_child_ptr(int index) {
+	try {
+		return mChildPtrs.at(index);
+	}
+	catch (const std::out_of_range& oor) {
+		return NULL;
+	}
+}
+
+void non_leaf::set_child_ptrs() {
+	mChildPtrs.clear();
+	mChildPtrs.reserve(gMaxDegree);
+}
+
+void non_leaf::set_child_ptrs(std::vector<node*> newChildPtrs) {
+	mChildPtrs = newChildPtrs;
+}
+
+std::vector<node*> non_leaf::get_child_ptrs() {
+	return mChildPtrs;
+}
+
+// Split and return new node pointer
+void non_leaf::split(std::vector<std::string>& keys, std::vector<node*>& childPtrs) {
+	if (keys.size() < gMaxDegree) return;
+	// Re-intials the original vectors
+	set_keys();
+	set_child_ptrs();
+	// Constructs a new vectors to contain the new value.
+	std::vector<std::string> newKeys;
+	newKeys.reserve(gMaxDegree - 1);// extra one for splitting
+	std::vector<node*> newChildPtrs;
+	newChildPtrs.reserve(gMaxDegree);// extra one for splitting
+	// Traverses the new vectors and splits it into original and new Vectors.
+	std::vector<std::string>::iterator keysIt;
+	std::vector<node*>::iterator childPtrsIt = childPtrs.begin();
+	int i = 0;
+	std::string tempKey = "";
+	for (keysIt = keys.begin(); keysIt != keys.end(); keysIt++, childPtrsIt++, i++) {
+		if (i == gMinDegree) {
+			set_child_ptr(*childPtrsIt);
+			childPtrsIt++;
+			tempKey = *keysIt;
+			keysIt++;
+			newChildPtrs.push_back(*childPtrsIt);
+			childPtrsIt++;
+		}
+		if (i < gMinDegree) {
+			set_child_ptr(*childPtrsIt);
+			set_key(*keysIt);// extra one for parent
+		}
+		else {
+			newKeys.push_back(*keysIt);
+			newChildPtrs.push_back(*childPtrsIt);
+		}
+	}
+	non_leaf* newNLeafPtr = new non_leaf(get_parent_ptr(), newKeys, newChildPtrs);
+	// Add the extra key and new child pointer to vectors.
+	keys.push_back(tempKey);
+	childPtrs.push_back(newNLeafPtr);
 }
 
 class leaf : public node {
 	using node::node;
 public:
-	leaf();
-	void set_pair(std::string newKey, std::string newRecord);
-	void set_next_sibling_ptr(leaf* nextPtr);
+	// Constructor
+	leaf(node*, std::vector<std::string>, std::vector<std::string>);
+	// Setter and Getter
+	void add_pair(std::string, std::string);
+	int get_values_size();
+	void set_next_sibling_ptr(leaf*);
 	leaf* get_next_sibling_ptr();
-	bool is_max();
+	// Check node status
+	bool upper_bound();
+	bool lower_bound();
 	bool is_leaf();
-	leaf* query_key(std::string key);
+	// Support querying and inserting
+	leaf* parse_key(std::string);
 	void print();
 private:
-	void add_record(std::string newRecord);
 	std::vector<std::string> mRecords;
 	leaf* mNextSiblingPtr = NULL;
+	// Setter and Getter
+	void set_record(std::string);
+	std::vector<std::string> get_records();
 };
 
-leaf::leaf() : node() {
-	mRecords.reserve(gOrder - 1);
+leaf::leaf(node* parentPtr, std::vector<std::string> newKeys, std::vector<std::string> newRecords) : node(parentPtr) {
+	mRecords.reserve(gMaxDegree - 1);
+	mKeys = newKeys;
+	mRecords = newRecords;
 }
 
-void leaf::set_pair(std::string newkey, std::string newRecord) {
-	add_key(newkey);
-	add_record(newRecord);
-	//for (int i = 0; i < sizeof(mKeys); i++) {
-		////should compare here
-	//}
+void leaf::add_pair(std::string newkey, std::string newRecord) {
+	if (upper_bound()) return;
+	set_key(newkey);
+	set_record(newRecord);
+}
+
+int leaf::get_values_size() {
+	return mRecords.size();
 }
 
 void leaf::set_next_sibling_ptr(leaf* nextPtr) {
@@ -183,129 +340,177 @@ leaf* leaf::get_next_sibling_ptr() {
 	return mNextSiblingPtr;
 }
 
-void leaf::add_record(std::string newRecord) {
-	mRecords.push_back(newRecord);
+bool leaf::upper_bound() {
+	return mRecords.size() == gMaxDegree - 1;
 }
 
-bool leaf::is_max() {
-	return mRecords.size() == gOrder - 1;
+bool leaf::lower_bound() {
+	return mRecords.size() >= gMinDegree;
 }
 
 bool leaf::is_leaf() {
 	return true;
 }
 
-leaf* leaf::query_key(std::string key) {
-	std::string objStr;
-	//Traverse the keys
+/// <summary>
+/// Compares each string key and returns itself or NULL.
+/// </summary>
+leaf* leaf::parse_key(std::string key) {
 	std::vector<std::string>::iterator it;
 	int i = 0;
-	for (it = mKeys.begin(); it != mKeys.end(); it++, i++) {
-		objStr = *it;
-		if (compare_key(key, objStr) == 0) {
+	for (it = get_keys().begin(); it != get_keys().end(); it++, i++) {
+		if (compare_key(key, *it) == 0) {
 			leaf* leafPtr = this;
 			return leafPtr;
 		}
 	}
-	return NULL;//means no key
+	return NULL;// means no key
 }
 
 void leaf::print() {
-	std::vector<std::string>::iterator keysIt = mKeys.begin();
-	std::vector<std::string>::iterator recordsIt = mRecords.begin();
-	while (recordsIt != mRecords.end()) {
-		std::cout << *keysIt << "    " << *recordsIt << " | ";
+	std::vector<std::string>::iterator keysIt = get_keys().begin();
+	std::vector<std::string>::iterator recordsIt = get_records().begin();
+	while (recordsIt != get_records().end()) {
+		std::cout << "key: " << *keysIt << " | " << "record: " << *recordsIt << " | ";
 		keysIt++;
 		recordsIt++;
 	}
 	std::cout << std::endl;
 }
 
+void leaf::set_record(std::string newRecord) {
+	mRecords.push_back(newRecord);
+}
+
+std::vector<std::string> leaf::get_records() {
+	return mRecords;
+}
+
 class b_plus_tree {
 public:
-	b_plus_tree();
-	void initial(std::string);
+	// Constructor
+	b_plus_tree(std::string filePath);
 	void traverse_leaf();
 	leaf* query(std::string key);
 	void insert(std::string key, std::string record);
-	//void delete(std::string key);
+	void insert(leaf* leafPtr, std::string key, std::string record);
+	// void delete(std::string key);
 private:
 	non_leaf* mRoot;
 	leaf* mHeader;
-	void set_root(non_leaf* newRoot);
+	void set_root_ptr(non_leaf* newRoot);
 	non_leaf* get_root_ptr();
+	void set_header_ptr(leaf* newHeader);
 	leaf* get_header_ptr();
 	std::string trim(std::string);
 };
 
-b_plus_tree::b_plus_tree() {
-	mRoot = new non_leaf();
-	mHeader = new leaf();
-}
+// by default, it being sequential (next larger than cur, not same)
+// initial and then inserting
+b_plus_tree::b_plus_tree(std::string filePath) {
 
-//should ensure being sequential (next larger than cur, not same)
-void b_plus_tree::initial(std::string filePath) {
+	std::vector<std::string> tempKeys;
+	tempKeys.reserve(gMaxDegree - 1);
+	std::vector<std::string> tempRecords;
+	tempRecords.reserve(gMaxDegree - 1);
+
+	leaf* leafPtr;
+
 	std::ifstream infile(filePath);
-	std::string line, key, record;//record should be ptr to fstream address
-	
-	leaf* leafPtr = get_header_ptr();
-	for (std::string line; std::getline(infile, line); ) {
-		key = trim(line.substr(0, 7));
-		record = trim(line.substr(15, 80));
-		if (!(leafPtr->is_max())) {
-			leafPtr->set_pair(key, record);
+	std::string line;
+	int i = 0;
+	for (std::string line; std::getline(infile, line); i++ ) {
+		tempKeys.push_back(trim(line.substr(0, 7)));
+		tempRecords.push_back(trim(line.substr(15, 80)));
+		// Initials the starter root and two leaf.
+		if (i == gMinDegree) {// the first minimum degree
+			set_header_ptr(new leaf(NULL, tempKeys, tempRecords));
+			tempKeys.clear();
+			tempKeys.reserve(gMaxDegree - 1);
+			tempRecords.clear();
+			tempRecords.reserve(gMaxDegree - 1);
 		}
-		else {
-			leaf* nextPtr = new leaf();
-			leafPtr->set_next_sibling_ptr(nextPtr);
-			leafPtr = nextPtr;
-			leafPtr->set_pair(key, record);
+		else if (i == gMinDegree * 2) {// the second minimum degree
+			leafPtr = new leaf(NULL, tempKeys, tempRecords);
+			get_header_ptr()->set_next_sibling_ptr(leafPtr);
+			set_root_ptr(new non_leaf(leafPtr->get_first_key(), get_header_ptr(), leafPtr));
+			get_header_ptr()->set_parent_ptr(get_root_ptr());
+			leafPtr->set_parent_ptr(get_root_ptr());
 		}
 	}
+
+	infile.close();
 }
 
 void b_plus_tree::traverse_leaf() {
-	//test
-	non_leaf* rootPtr = get_root_ptr();
+	/// / test
+	// non_leaf* rootPtr = get_root_ptr();
 
 	leaf* leafPtr = get_header_ptr();
 	leafPtr->print();
 	while (leafPtr->get_next_sibling_ptr() != NULL) {
 		leafPtr = leafPtr->get_next_sibling_ptr();
 		leafPtr->print();
-		//test
-		if (!rootPtr->is_max()) {
-			rootPtr->add_child_ptr(leafPtr);
-		}
+		/// / test
+		// if (!rootPtr->is_max()) {
+		// 	rootPtr->set_child_ptr(leafPtr);
+		// }
 	}
-	//Test
-	rootPtr->print();
+	/// / Test
+	// rootPtr->print();
 	query("AAA-377")->print();
 }
 
+// return leaf ptr if the key exists, ortherwise, NULL
 leaf* b_plus_tree::query(std::string key) {
 	node* nodePtr = get_root_ptr();
-	do {
-		nodePtr = nodePtr->query_key(key);
+	node* nextPtr = nodePtr->parse_key(key);
+	while (nextPtr != NULL) {
 		if (nodePtr->is_leaf()) {
-			//cast supertype to derived type
-			return dynamic_cast<leaf*>(nodePtr->query_key(key));
+			// cast supertype to derived type
+			return dynamic_cast<leaf*>(nodePtr->parse_key(key));
 		}
-	} while (true);
+		nextPtr = nodePtr->parse_key(key);
+	};
 	return NULL;
 }
 
 void b_plus_tree::insert(std::string key, std::string record) {
-	//query
+	// query
+	// If null, 
+	node* nodePtr = get_root_ptr();
+	node* nextPtr = nodePtr->parse_key(key);
+	// while (nextPtr != NULL) {
+	// 	if (nodePtr->is_leaf()) {
+	// 		// cast supertype to derived type
+	// 		dynamic_cast<leaf*>(nodePtr->query_key(key));
+	// 	}
+	// 	nextPtr = nodePtr->query_key(key);
+	// };
+	// No leaf under root, it is a new b
+	if (nextPtr == NULL) {
 
+	}
 }
 
-void b_plus_tree::set_root(non_leaf* newRoot) {
+void b_plus_tree::insert(leaf* leafPtr, std::string key, std::string record) {
+	node* nodePtr = get_root_ptr();
+	node* nextPtr = nodePtr->parse_key(key);
+	if (nextPtr == NULL) {
+
+	}
+}
+
+void b_plus_tree::set_root_ptr(non_leaf* newRoot) {
 	mRoot = newRoot;
 }
 
 non_leaf* b_plus_tree::get_root_ptr() {
 	return mRoot;
+}
+
+void b_plus_tree::set_header_ptr(leaf* newHeader) {
+	mHeader = newHeader;
 }
 
 leaf* b_plus_tree::get_header_ptr() {
@@ -320,11 +525,8 @@ std::string b_plus_tree::trim(std::string str) {
 
 int main()
 {
-	b_plus_tree tree;
-	tree.initial("D:\\CBVeLuMe\\Desktop\\WorkNote\\algorithm-concepts\\BPlusTree\\temp.txt");
-	tree.traverse_leaf();
-
-	//node* keyPtr = tree.get_root_ptr();
-	//std::cout << typeid(keyPtr).name() << std::endl;
-	//std::cout << keyPtr->is_leaf() << std::endl;
+	b_plus_tree tree("D:\\CBVeLuMe\\Desktop\\WorkNote\\algorithm-concepts\\BPlusTree\\temp.txt");
+	tree.insert("KGB-123", "");
+	// tree.initial("D:\\CBVeLuMe\\Desktop\\WorkNote\\algorithm-concepts\\BPlusTree\\temp.txt");
+	// tree.traverse_leaf();
 }
