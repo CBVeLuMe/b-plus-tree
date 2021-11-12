@@ -48,12 +48,12 @@ protected:
 
 node::node() {
 	set_parent_ptr(NULL);
-	mKeys.reserve(gMaxDegree - 1);// maxNumKeys = maxDegree - 1
+	set_keys();
 }
 
 node::node(node* parentPtr) {
 	set_parent_ptr(parentPtr);
-	mKeys.reserve(gMaxDegree - 1);// maxNumKeys = maxDegree - 1
+	set_keys();
 }
 
 void node::set_parent_ptr(node* parentPtr) {
@@ -78,12 +78,13 @@ void node::set_keys() {
 }
 
 void node::set_keys(std::vector<std::string> newKeys) {
-	mKeys = newKeys;
+	mKeys = std::move(newKeys);
 }
 
 std::vector<std::string> node::get_keys() {
 	return mKeys;
 }
+
 /// <summary>
 /// Compares two String keys and returns an integer that indicates comparative relationship.
 /// </summary>
@@ -126,16 +127,16 @@ private:
 
 //For root only
 non_leaf::non_leaf(std::string key0, node* leafPtr0, node* leafPtr1) : node() {
-	mChildPtrs.reserve(gMaxDegree);
-	mChildPtrs.push_back(leafPtr0);
-	mKeys.push_back(key0);
-	mChildPtrs.push_back(leafPtr1);
+	set_child_ptrs();
+	set_child_ptr(leafPtr0);
+	set_key(key0);
+	set_child_ptr(leafPtr1);
 }
 
 non_leaf::non_leaf(node* parentPtr, std::vector<std::string> newKeys, std::vector<node*> newChildPtrs) : node(parentPtr) {
-	mChildPtrs.reserve(gMaxDegree);
-	mKeys = newKeys;
-	mChildPtrs = newChildPtrs;
+	set_child_ptrs();
+	set_keys(newKeys);
+	set_child_ptrs(newChildPtrs);
 }
 
 int non_leaf::get_values_size() {
@@ -158,9 +159,10 @@ bool non_leaf::is_leaf() {
 /// Compares each string key and returns a pointer to the children node.
 /// </summary>
 node* non_leaf::parse_key(std::string key) {
+	std::vector<std::string> tempKeys = get_keys();
 	std::vector<std::string>::iterator it;
 	int i = 0;
-	for (it = mKeys.begin(); it != mKeys.end(); it++, i++) {
+	for (it = tempKeys.begin(); it != tempKeys.end(); it++, i++) {
 		int result = compare_key(key, *it);
 		if (result < 0) return get_child_ptr(i);
 		else if (result == 0) return get_child_ptr(i++);
@@ -173,8 +175,10 @@ node* non_leaf::parse_key(std::string key) {
 /// </summary>
 node* non_leaf::insert(std::string& newKey, node* newChildPtr) {
 	// Constructs two new vectors to contain the original and new value.
-	std::vector<std::string>::iterator keyIt;
-	std::vector<node*>::iterator childPtrsIt = mChildPtrs.begin();
+	std::vector<std::string> oriKeys = get_keys();
+	std::vector<node*> oriChildPtrs = get_child_ptrs();
+	std::vector<std::string>::iterator keyIt = oriKeys.begin();
+	std::vector<node*>::iterator childPtrsIt = oriChildPtrs.begin();
 	std::vector<std::string> tempKeys;
 	tempKeys.reserve(gMaxDegree);// extra one for potential splitting
 	std::vector<node*> tempChildPtrs;
@@ -212,8 +216,10 @@ node* non_leaf::insert(std::string& newKey, node* newChildPtr) {
 }
 
 void non_leaf::print() {
-	std::vector<std::string>::iterator keysIt = get_keys().begin();
-	std::vector<node*>::iterator childPtrsIt = get_child_ptrs().begin();
+	std::vector<std::string> tempKeys = get_keys();
+	std::vector<node*> tempChildPtrs = get_child_ptrs();
+	std::vector<std::string>::iterator keysIt = tempKeys.begin();
+	std::vector<node*>::iterator childPtrsIt = tempChildPtrs.begin();
 	std::cout << "Child: " << *childPtrsIt << " | ";
 	childPtrsIt++;
 	while (keysIt != get_keys().end()) {
@@ -244,7 +250,7 @@ void non_leaf::set_child_ptrs() {
 }
 
 void non_leaf::set_child_ptrs(std::vector<node*> newChildPtrs) {
-	mChildPtrs = newChildPtrs;
+	mChildPtrs = std::move(newChildPtrs);
 }
 
 std::vector<node*> non_leaf::get_child_ptrs() {
@@ -313,13 +319,14 @@ private:
 	leaf* mNextSiblingPtr = NULL;
 	// Setter and Getter
 	void set_record(std::string);
+	void set_records(std::vector<std::string>);
 	std::vector<std::string> get_records();
 };
 
 leaf::leaf(node* parentPtr, std::vector<std::string> newKeys, std::vector<std::string> newRecords) : node(parentPtr) {
 	mRecords.reserve(gMaxDegree - 1);
-	mKeys = newKeys;
-	mRecords = newRecords;
+	set_keys(newKeys);
+	set_records(newRecords);
 }
 
 void leaf::add_pair(std::string newkey, std::string newRecord) {
@@ -356,9 +363,10 @@ bool leaf::is_leaf() {
 /// Compares each string key and returns itself or NULL.
 /// </summary>
 leaf* leaf::parse_key(std::string key) {
+	std::vector<std::string> tempKeys = get_keys();
 	std::vector<std::string>::iterator it;
 	int i = 0;
-	for (it = get_keys().begin(); it != get_keys().end(); it++, i++) {
+	for (it = tempKeys.begin(); it != tempKeys.end(); it++, i++) {
 		if (compare_key(key, *it) == 0) {
 			leaf* leafPtr = this;
 			return leafPtr;
@@ -368,9 +376,11 @@ leaf* leaf::parse_key(std::string key) {
 }
 
 void leaf::print() {
-	std::vector<std::string>::iterator keysIt = get_keys().begin();
-	std::vector<std::string>::iterator recordsIt = get_records().begin();
-	while (recordsIt != get_records().end()) {
+	std::vector<std::string> tempKeys = get_keys();
+	std::vector<std::string> tempRecords = get_records();
+	std::vector<std::string>::iterator keysIt = tempKeys.begin();
+	std::vector<std::string>::iterator recordsIt = tempRecords.begin();
+	while (recordsIt != tempRecords.end()) {
 		std::cout << "key: " << *keysIt << " | " << "record: " << *recordsIt << " | ";
 		keysIt++;
 		recordsIt++;
@@ -380,6 +390,10 @@ void leaf::print() {
 
 void leaf::set_record(std::string newRecord) {
 	mRecords.push_back(newRecord);
+}
+
+void leaf::set_records(std::vector<std::string> newRecords) {
+	mRecords = std::move(newRecords);
 }
 
 std::vector<std::string> leaf::get_records() {
@@ -408,6 +422,8 @@ private:
 // by default, it being sequential (next larger than cur, not same)
 // initial and then inserting
 b_plus_tree::b_plus_tree(std::string filePath) {
+	set_header_ptr(NULL);
+	set_root_ptr(NULL);
 
 	std::vector<std::string> tempKeys;
 	tempKeys.reserve(gMaxDegree - 1);
@@ -423,14 +439,14 @@ b_plus_tree::b_plus_tree(std::string filePath) {
 		tempKeys.push_back(trim(line.substr(0, 7)));
 		tempRecords.push_back(trim(line.substr(15, 80)));
 		// Initials the starter root and two leaf.
-		if (i == gMinDegree) {// the first minimum degree
+		if (i == gMinDegree) {// meet the first minimum degree
 			set_header_ptr(new leaf(NULL, tempKeys, tempRecords));
 			tempKeys.clear();
 			tempKeys.reserve(gMaxDegree - 1);
 			tempRecords.clear();
 			tempRecords.reserve(gMaxDegree - 1);
 		}
-		else if (i == gMinDegree * 2) {// the second minimum degree
+		else if (i == gMinDegree * 2) {// meet the second minimum degree
 			leafPtr = new leaf(NULL, tempKeys, tempRecords);
 			get_header_ptr()->set_next_sibling_ptr(leafPtr);
 			set_root_ptr(new non_leaf(leafPtr->get_first_key(), get_header_ptr(), leafPtr));
