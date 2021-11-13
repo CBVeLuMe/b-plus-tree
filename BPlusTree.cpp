@@ -32,8 +32,7 @@ public:
 	// Support querying and inserting
 	virtual node* parse_key(std::string) = 0;
 	virtual node* insert(std::string&, std::string&, node*) = 0;
-	//virtual node* insert(std::string&, node*) = 0;
-	virtual void print() = 0;
+	virtual void print();
 private:
 protected:
 	node* mParentPtr;
@@ -41,7 +40,7 @@ protected:
 	// Setter and Getter
 	void set_key(std::string);
 	void set_keys();
-	void set_keys(std::vector<std::string>);
+	void set_keys(std::vector<std::string>&);
 	std::vector<std::string> get_keys();
 	// Support querying and inserting
 	static int compare_key(std::string, std::string);
@@ -70,6 +69,16 @@ std::string node::get_first_key() {
 	return mKeys.front();
 }
 
+void node::print() {
+	std::string nodeName = "Non-leaf " + get_first_key() + ": ";
+	if (is_leaf())
+		nodeName = "Leaf " + get_first_key() + ": ";
+	std::string parentName = "Parent: NULL(Root) | ";
+	if (get_parent_ptr() != NULL)
+		parentName = "Parent: " + get_parent_ptr()->get_first_key() + " | ";
+	std::cout << nodeName << parentName;
+}
+
 void node::set_key(std::string newKey) {
 	mKeys.push_back(newKey);
 }
@@ -79,7 +88,8 @@ void node::set_keys() {
 	mKeys.reserve(gMaxDegree - 1);
 }
 
-void node::set_keys(std::vector<std::string> newKeys) {
+void node::set_keys(std::vector<std::string>& newKeys) {
+	set_keys();
 	mKeys = std::move(newKeys);
 }
 
@@ -121,7 +131,7 @@ private:
 	void set_child_ptr(node*);
 	node* get_child_ptr(int);
 	void set_child_ptrs();
-	void set_child_ptrs(std::vector<node*>);
+	void set_child_ptrs(std::vector<node*>&);
 	std::vector<node*> get_child_ptrs();
 	// Support querying and inserting
 	non_leaf* split(std::vector<std::string>&, std::vector<node*>&);
@@ -137,7 +147,6 @@ non_leaf::non_leaf(std::string key0, node* leafPtr0, node* leafPtr1) : node() {
 }
 
 non_leaf::non_leaf(node* parentPtr, std::vector<std::string> newKeys, std::vector<node*> newChildPtrs) : node(parentPtr) {
-	set_child_ptrs();
 	set_keys(newKeys);
 	set_child_ptrs(newChildPtrs);
 }
@@ -180,22 +189,22 @@ node* non_leaf::insert(std::string& newKey, std::string& newRecord, node* newChi
 	// Construct two new vectors to contain the original and new value.
 	std::vector<std::string> oriKeys = get_keys();
 	std::vector<node*> oriChildPtrs = get_child_ptrs();
-	std::vector<std::string>::iterator keyIt = oriKeys.begin();
+	std::vector<std::string>::iterator keysIt = oriKeys.begin();
 	std::vector<node*>::iterator childPtrsIt = oriChildPtrs.begin();
 	std::vector<std::string> tempKeys;
 	tempKeys.reserve(gMaxDegree);// extra one for potential splitting
 	std::vector<node*> tempChildPtrs;
 	tempChildPtrs.reserve(gMaxDegree + 1);// extra one for potential splitting
 	// Traverse the current keys and find a suitable position for new value.
-	// For a inserting newKey, it always comes with a right-side new pointer, and the left-side is orignial.
+	// When inserting a new Key, it always comes with the left-side orignial pointer and the right-side new pointer.
 	tempChildPtrs.push_back(*childPtrsIt);
 	childPtrsIt++;
-	for (keyIt; keyIt != get_keys().end(); keyIt++, childPtrsIt++) {
-		if (compare_key(newKey, *keyIt) < 0) {
+	for (keysIt; keysIt != oriKeys.end(); keysIt++, childPtrsIt++) {
+		if (compare_key(newKey, *keysIt) < 0) {
 			tempKeys.push_back(newKey);
 			tempChildPtrs.push_back(newChildPtr);
 		}
-		tempKeys.push_back(*keyIt);
+		tempKeys.push_back(*keysIt);
 		tempChildPtrs.push_back(*childPtrsIt);
 	}
 	if (compare_key(newKey, tempKeys.back()) > 0) {
@@ -219,23 +228,26 @@ node* non_leaf::insert(std::string& newKey, std::string& newRecord, node* newChi
 }
 
 void non_leaf::print() {
+	node::print();
+	std::string content = "";
 	std::vector<std::string> tempKeys = get_keys();
 	std::vector<node*> tempChildPtrs = get_child_ptrs();
 	std::vector<std::string>::iterator keysIt = tempKeys.begin();
 	std::vector<node*>::iterator childPtrsIt = tempChildPtrs.begin();
-	std::cout << "Child: " << *childPtrsIt << " | ";
+	//content += "Child: " + (*childPtrsIt)->get_first_key() + " | ";
 	childPtrsIt++;
-	while (keysIt != get_keys().end()) {
-		std::cout << "key: " << *keysIt << " | " << "Child: " << *childPtrsIt << " | ";
+	while (keysIt != tempKeys.end()) {
+		content += "Key: " + *keysIt /*+ " | " + "Child: " + (*childPtrsIt)->get_first_key() */ + " | ";
 		keysIt++;
 		childPtrsIt++;
 	}
-	std::cout << std::endl;
+	std::cout << content << std::endl;
 }
 
 void non_leaf::set_child_ptr(node* newChildPtr) {
 	if (upper_bound()) return;
 	mChildPtrs.push_back(newChildPtr);
+	newChildPtr->set_parent_ptr(this);
 }
 
 node* non_leaf::get_child_ptr(int index) {
@@ -252,8 +264,15 @@ void non_leaf::set_child_ptrs() {
 	mChildPtrs.reserve(gMaxDegree);
 }
 
-void non_leaf::set_child_ptrs(std::vector<node*> newChildPtrs) {
-	mChildPtrs = std::move(newChildPtrs);
+void non_leaf::set_child_ptrs(std::vector<node*>& newChildPtrs) {
+	//mChildPtrs = std::move(newChildPtrs);
+	set_child_ptrs();
+	std::vector<node*>::iterator it;
+	for (it = newChildPtrs.begin(); it != newChildPtrs.end(); it++) {
+		set_child_ptr(*it);
+		node* temp = *it;
+		temp->set_parent_ptr(this);
+	}
 }
 
 std::vector<node*> non_leaf::get_child_ptrs() {
@@ -337,7 +356,6 @@ private:
 };
 
 leaf::leaf(node* parentPtr, std::vector<std::string> newKeys, std::vector<std::string> newRecords) : node(parentPtr) {
-	set_records();
 	set_keys(newKeys);
 	set_records(newRecords);
 }
@@ -378,11 +396,9 @@ bool leaf::is_leaf() {
 leaf* leaf::parse_key(std::string key) {
 	std::vector<std::string> tempKeys = get_keys();
 	std::vector<std::string>::iterator it;
-	int i = 0;
-	for (it = tempKeys.begin(); it != tempKeys.end(); it++, i++) {
+	for (it = tempKeys.begin(); it != tempKeys.end(); it++) {
 		if (compare_key(key, *it) == 0) {
-			leaf* leafPtr = this;
-			return leafPtr;
+			return this;
 		}
 	}
 	return NULL;// means no newKey
@@ -428,16 +444,21 @@ node* leaf::insert(std::string& newKey, std::string& newRecord, node* newChildPt
 }
 
 void leaf::print() {
+	node::print();
+	std::string content = "";
 	std::vector<std::string> tempKeys = get_keys();
 	std::vector<std::string> tempRecords = get_records();
 	std::vector<std::string>::iterator keysIt = tempKeys.begin();
 	std::vector<std::string>::iterator recordsIt = tempRecords.begin();
 	while (recordsIt != tempRecords.end()) {
-		std::cout << "key: " << *keysIt << " | " << "record: " << *recordsIt << " | ";
+		content += "Key: " + *keysIt /*<< " | " << "Record: " << *recordsIt */ + " | ";
 		keysIt++;
 		recordsIt++;
 	}
-	std::cout << std::endl;
+	std::string nextSibling = "Next sibling: NULL(end)";
+	if (get_next_sibling_ptr() != NULL)
+		nextSibling = "Next sibling: " + get_next_sibling_ptr()->get_first_key();
+	std::cout << content << nextSibling << std::endl;
 }
 
 void leaf::set_record(std::string newRecord) {
@@ -450,6 +471,7 @@ void leaf::set_records() {
 }
 
 void leaf::set_records(std::vector<std::string> newRecords) {
+	set_records();
 	mRecords = std::move(newRecords);
 }
 
@@ -512,7 +534,7 @@ private:
 	void set_header_ptr(leaf* newHeader);
 	leaf* get_header_ptr();
 	std::string trim(std::string);
-	void clear(std::vector<std::string>&);
+	void reset(std::vector<std::string>&);
 };
 
 // by default, it being sequential (next larger than cur, not same)
@@ -520,51 +542,52 @@ private:
 b_plus_tree::b_plus_tree(std::string filePath) {
 	set_header_ptr(NULL);
 	set_root_ptr(NULL);
-
 	std::vector<std::string> tempKeys;
 	std::vector<std::string> tempRecords;
-	clear(tempKeys);
-	clear(tempRecords);
-
+	reset(tempKeys);
+	reset(tempRecords);
 	leaf* leafPtr = NULL;
 	leaf* nextPtr = NULL;
-
+	// Insert keys and records from the lines of flat-file
 	std::ifstream infile(filePath);
 	std::string line;
-	int i = 1;
-	for (std::string line; std::getline(infile, line); i++) {
+	int counter = 1;
+	for (std::string line; std::getline(infile, line);) {
 		tempKeys.push_back(trim(line.substr(0, 7)));
 		tempRecords.push_back(trim(line.substr(15, 80)));
-		// Initial the starter root and two leaf.
-		if (i <= gMinDegree * 2) {
-			if (i == gMinDegree) {// meet the first minimum degree
-				set_header_ptr(new leaf(NULL, tempKeys, tempRecords));
-				clear(tempKeys);
-				clear(tempRecords);
-			}
-			else if (i == gMinDegree * 2) {// meet the second minimum degree
-				leafPtr = new leaf(NULL, tempKeys, tempRecords);
-				get_header_ptr()->set_next_sibling_ptr(leafPtr);
-				set_root_ptr(new non_leaf(leafPtr->get_first_key(), get_header_ptr(), leafPtr));
-				get_header_ptr()->set_parent_ptr(get_root_ptr());
-				leafPtr->set_parent_ptr(get_root_ptr());
-				clear(tempKeys);
-				clear(tempRecords);
-			}
+		if (counter == 1 && tempKeys.size() == gMinDegree) {// meet the first minimum degree
+			// Initial the first minimum leaf
+			leafPtr = new leaf(NULL, tempKeys, tempRecords);
+			set_header_ptr(leafPtr);
+			reset(tempKeys);
+			reset(tempRecords);
+			counter++;
 		}
-		else {
-			if (i % gMaxDegree == 0 && i != gMaxDegree) {
-				// Insert the left lines from leaf to internal
-				nextPtr = new leaf(NULL, tempKeys, tempRecords);
-				leafPtr->set_next_sibling_ptr(nextPtr);
-				leafPtr = nextPtr;
-				insert(leafPtr->get_first_key(), leafPtr);
-				clear(tempKeys);
-				clear(tempRecords);
-			}
+		else if (counter == 2 && tempKeys.size() == gMinDegree) {// meet the second minimum degree
+			// Initial the second minimum leaf
+			nextPtr = new leaf(NULL, tempKeys, tempRecords);
+			leafPtr->set_next_sibling_ptr(nextPtr);
+			// Initial the root and add children
+			set_root_ptr(new non_leaf(nextPtr->get_first_key(), leafPtr, nextPtr));
+			leafPtr->set_parent_ptr(get_root_ptr());
+			nextPtr->set_parent_ptr(get_root_ptr());
+			leafPtr = nextPtr;
+			reset(tempKeys);
+			reset(tempRecords);
+			counter++;
+		}
+		else if (counter > 2 && tempKeys.size() == gMaxDegree - 1) {
+			// Insert the lefted lines from leaf to non-leaf
+			nextPtr = new leaf(NULL, tempKeys, tempRecords);
+			leafPtr->set_next_sibling_ptr(nextPtr);
+			leafPtr = nextPtr;
+			insert(leafPtr->get_first_key(), leafPtr);
+			reset(tempKeys);
+			reset(tempRecords);
 		}
 	}
-	// NOT enough, insert lefted single key 
+	// After for-loop, insert the rest lines one by one
+	// TODO: if the rest is less than min, then balance it from last (through delete method)
 	if (!tempKeys.empty()) {
 		std::vector<std::string>::iterator keysIt = tempKeys.begin();
 		std::vector<std::string>::iterator recordsIt = tempRecords.begin();
@@ -572,11 +595,10 @@ b_plus_tree::b_plus_tree(std::string filePath) {
 			insert(*keysIt, *recordsIt);
 		}
 	}
-
 	infile.close();
 }
 
-void b_plus_tree::clear(std::vector<std::string>& vector) {
+void b_plus_tree::reset(std::vector<std::string>& vector) {
 	vector.clear();
 	vector.reserve(gMaxDegree - 1);
 }
@@ -586,52 +608,53 @@ void b_plus_tree::traverse_leaf() {
 	leafPtr->print();
 	while (leafPtr->get_next_sibling_ptr() != NULL) {
 		leafPtr = leafPtr->get_next_sibling_ptr();
-		leafPtr->print();
+		//leafPtr->print();
+		//debug traverse leaf parent
+		leafPtr->get_parent_ptr()->print();
 	}
-	//query("AAA-377")->print();
+	//debug
+	get_root_ptr()->print();
 }
 
 // return leaf ptr containing the newKey if the newKey exists, ortherwise, non_leaf ptr closed to newKey for insertion
 leaf* b_plus_tree::query(std::string key) {
-	node* nodePtr = get_root_ptr()->parse_key(key);
-	while (nodePtr != NULL) {
-		if (nodePtr->is_leaf()) {
-			return dynamic_cast<leaf*>(nodePtr);// cast supertype to derived type
-		}
+	node* nodePtr = get_root_ptr();
+	while (!nodePtr->is_leaf()) {
 		nodePtr = nodePtr->parse_key(key);
-	};
-	return NULL;
+	}
+	return dynamic_cast<leaf*>(nodePtr->parse_key(key));
 }
 
 //For initial
 void b_plus_tree::insert(std::string newKey, leaf* newLeafPtr) {
+	std::cout << "new insert: " << newKey << std::endl;
 	if (query(newKey) != NULL) return;
 	std::string key = newKey;
 	std::string record = "";
 	node* leafPtr = newLeafPtr;
-	node* nodePtr = get_root_ptr()->parse_key(key);
-	node* nextPtr = NULL;
-	while (!nodePtr->is_leaf()) {
-		nodePtr = nodePtr->parse_key(key);
+	node* nodePtr = get_root_ptr();// always be non-leaf
+	node* nextPtr = get_root_ptr()->parse_key(key);// finally be leaf
+	// Find the doable non-leaf
+	while (!nextPtr->is_leaf()) {
+		nodePtr = nextPtr;
+		nextPtr = nodePtr->parse_key(key);
 	};
-	nodePtr = nodePtr->get_parent_ptr();
-	leafPtr->set_parent_ptr(nodePtr);
-	// Get target non leaf here, insert from bottom
+	// Insert the key and leafPtr to non-leaf
 	do {
-		nextPtr = nodePtr->insert(key, record, leafPtr);
-		leafPtr->set_parent_ptr(nextPtr);
-
-	} while (nextPtr != NULL);
+		nodePtr = nodePtr->insert(key, record, leafPtr);
+		std::cout << "next insert: " << key << std::endl;
+	} while (nodePtr != NULL);
 }
 
 void b_plus_tree::insert(std::string newKey, std::string newRecord) {
+	//debug
 	// !!!!!!! FIX THE Q AAS-312 BUG !!!!!!!! here
-	std::cout << "Debugging Key: " << newKey << std::endl;
-	query(newKey)->print();
+	std::cout << "Debug insert single key: " << newKey << std::endl;
+	return;
 	if (query(newKey) != NULL) return;
 	std::string key = newKey;
 	std::string record = newRecord;
-	node* nodePtr = get_root_ptr()->parse_key(key);
+	node* nodePtr = get_root_ptr();
 	node* nextPtr = NULL;
 	while (!nodePtr->is_leaf()) {
 		nodePtr = nodePtr->parse_key(key);
@@ -676,6 +699,16 @@ int main()
 {
 	b_plus_tree tree("D:\\CBVeLuMe\\Desktop\\WorkNote\\algorithm-concepts\\BPlusTree\\temp.txt");
 	tree.traverse_leaf();
+	//tree.query("123131-077");
+	//tree.query("AAA-077");
+	//tree.query("AAS-237");
+	std::cout << std::endl;
+
+	//debug
+	//tree.query("AAA-133")->print();
+	//tree.query("AAA-459")->print();
+	//tree.query("AAA-0")->print();
+	//tree.query("AAA-996")->print();
 	//tree.insert("KGB-123", "");
 	// tree.initial("D:\\CBVeLuMe\\Desktop\\WorkNote\\algorithm-concepts\\BPlusTree\\temp.txt");
 }
