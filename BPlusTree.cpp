@@ -2,6 +2,7 @@
 // Todo: Comments
 // Todo: To delete the pointer! and use reference for minnecessary
 // todo: isLeaf to template
+// todo: reset the header after delete?
 
 #include <fstream>
 #include <iostream>
@@ -229,14 +230,12 @@ node* non_leaf::insert(std::string& newKey, std::string& newRecord, node* newChi
 		newKey = tempKeys.back();
 		if (get_parent_ptr() == NULL) {
 			non_leaf* oriChildPtr = this;
-			set_parent_ptr(new non_leaf(tempKeys.back(), oriChildPtr, newChildPtr));
+			set_parent_ptr(new non_leaf(newKey, oriChildPtr, newChildPtr));
 			// No new key means it has a new root
 			newKey = "";
 			newChildPtr = NULL;
 			return get_parent_ptr();// NULL need to continue but return new root and no key
 		}
-		std::cout << "debug parent ptr:";
-		get_parent_ptr()->print();
 		return get_parent_ptr();// continue to insert to parent
 	}
 }
@@ -622,7 +621,8 @@ void b_plus_tree::traverse_leaf() {
 	leafPtr->print();
 	while (leafPtr->get_next_sibling_ptr() != NULL) {
 		leafPtr = leafPtr->get_next_sibling_ptr();
-		leafPtr->print();
+		// debug
+		//leafPtr->print();
 		leafPtr->get_parent_ptr()->print();
 	}
 	std::cout << "**********debug end**********" << std::endl;
@@ -663,30 +663,22 @@ leaf* b_plus_tree::query(std::string key) {
 	return dynamic_cast<leaf*>(nodePtr->parse_key(key));
 }
 
-//For initial
+//For initial, insert a leaf not only a recor
 void b_plus_tree::insert(std::string newKey, leaf* newLeafPtr) {
-	std::cout << "> Debug insert a new leaf: " << newKey;
 	if (query(newKey) != NULL) return;
 	std::string key = newKey;
 	std::string record = "";
 	node* leafPtr = newLeafPtr;
 	node* nodePtr = get_root_ptr();// always be non-leaf
 	node* nextPtr = get_root_ptr()->parse_key(key);// finally be leaf
-	// Find the doable non-leaf
+	// Find the non-leaf over leaf
 	while (!nextPtr->is_leaf()) {
 		nodePtr = nextPtr;// assign a nleaf above the leaf
 		nextPtr = nodePtr->parse_key(key);
 	};
-	std::cout << " > and found the target nleaf: " << nodePtr->get_first_key();
-	// Insert the key and leafPtr to non-leaf
-	//std::cout << "Debug Leaf: ";
-	//leafPtr->print();
-	//std::cout << "Debug inner insert: " << key << " | " << record << " | " << leafPtr << std::endl;
 	while (nodePtr != NULL && key != "") {
 		nodePtr = nodePtr->insert(key, record, leafPtr);
-		//std::cout << "Debug inner insert: " << key << " | " << record << " | " << std::endl;
 	}
-
 	if (nodePtr != NULL && key == "")
 		set_root_ptr(dynamic_cast<non_leaf*>(nodePtr));
 }
