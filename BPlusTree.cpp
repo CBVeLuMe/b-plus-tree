@@ -616,42 +616,49 @@ void b_plus_tree::reset(std::vector<std::string>& vector) {
 }
 
 void b_plus_tree::traverse_leaf() {
-	std::cout << "**********debug traverse all leaf**********" << std::endl;
+	std::cout << "**********debug traverse leaf**********" << std::endl;
 	leaf* leafPtr = get_header_ptr();
 	leafPtr->print();
 	while (leafPtr->get_next_sibling_ptr() != NULL) {
 		leafPtr = leafPtr->get_next_sibling_ptr();
-		// debug
-		//leafPtr->print();
-		leafPtr->get_parent_ptr()->print();
+		leafPtr->print();
 	}
-	std::cout << "**********debug end**********" << std::endl;
-	get_root_ptr()->print();
+	std::cout << "**********debug traverse end**********" << std::endl;
 }
 
 void b_plus_tree::traverse_all() {
-	std::cout << "**********Debug traverse all non_leaf**********" << std::endl;
+	std::cout << "**********debug traverse top-down**********" << std::endl;
 	non_leaf* nleafPtr = get_root_ptr();
+	nleafPtr->print();
 	// Contains the children pointers in same depth
-	std::vector<node*> tempPtrs = std::move(nleafPtr->get_child_ptrs());
+	std::vector<node*> tempPtrs = nleafPtr->get_child_ptrs();
 	std::vector<node*> nextPtrs;
 	std::vector<node*>::iterator tempIt = tempPtrs.begin();
+	int depth = 1;
 	while (!tempPtrs.empty()) {
+		std::cout << "*****DEPTH: " << depth << "*****" << std::endl;
 		while (tempIt != tempPtrs.end()) {
 			(*tempIt)->print();
 			if (!(*tempIt)->is_leaf()) {
-				//(*tempIt)->print();
-				nextPtrs = std::move(dynamic_cast<non_leaf*>(*tempIt)->get_child_ptrs());
+				std::vector<node*> childPtrs = dynamic_cast<non_leaf*>(*tempIt)->get_child_ptrs();
+				std::vector<node*>::iterator childPtrsIt;
+				for (childPtrsIt = childPtrs.begin(); childPtrsIt != childPtrs.end(); childPtrsIt++) {
+					nextPtrs.push_back(*childPtrsIt);
+				}
+
+
 			}
 			else {
 
 			}
 			tempIt++;
 		}
+		depth++;
 		tempPtrs.clear();
 		tempPtrs = std::move(nextPtrs);
 		tempIt = tempPtrs.begin();
 	}
+	std::cout << "**********debug traverse top-down end**********" << std::endl;
 }
 
 // return leaf ptr containing the newKey if the newKey exists, ortherwise, non_leaf ptr closed to newKey for insertion
@@ -736,7 +743,7 @@ int main()
 {
 	b_plus_tree tree("D:\\CBVeLuMe\\Desktop\\WorkNote\\algorithm-concepts\\BPlusTree\\temp.txt");
 	tree.traverse_leaf();
-	//tree.traverse_all();
+	tree.traverse_all();
 	//tree.query("123131-077");
 	//tree.query("AAA-077");
 	//tree.query("AAS-237");
