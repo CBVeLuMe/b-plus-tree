@@ -250,7 +250,7 @@ void non_leaf::print() {
 	content += "Child: " + (*childPtrsIt)->get_first_key() + " | ";
 	childPtrsIt++;
 	while (keysIt != tempKeys.end()) {
-		content += "Key: " + *keysIt + " | " + "Child: " + (*childPtrsIt)->get_first_key()  + " | ";
+		content += "Key: " + *keysIt + " | " + "Child: " + (*childPtrsIt)->get_first_key() + " | ";
 		keysIt++;
 		childPtrsIt++;
 	}
@@ -538,7 +538,7 @@ public:
 	void insert(std::string, leaf*);
 	void insert(std::string key, std::string record);
 	void insert(leaf* leafPtr, std::string key, std::string record);
-	// void delete(std::string newKey);
+	void remove(std::string key);
 private:
 	non_leaf* mRoot;
 	leaf* mHeader;
@@ -661,7 +661,7 @@ void b_plus_tree::traverse_all() {
 	std::cout << "**********debug traverse top-down end**********" << std::endl;
 }
 
-// return leaf ptr containing the newKey if the newKey exists, ortherwise, non_leaf ptr closed to newKey for insertion
+// return leaf pointer containing the key if the newKey exists, ortherwise, non_leaf ptr closed to newKey for insertion
 leaf* b_plus_tree::query(std::string key) {
 	node* nodePtr = get_root_ptr();
 	while (!nodePtr->is_leaf()) {
@@ -717,6 +717,13 @@ void b_plus_tree::insert(leaf* leafPtr, std::string key, std::string record) {
 	}
 }
 
+void b_plus_tree::remove(std::string key) {
+	//if its null that means nothing so go back
+	if (query(key) == NULL) return;
+	//find the leaf
+	//leaf* leafPtr = query(key);
+}
+
 void b_plus_tree::set_root_ptr(non_leaf* newRoot) {
 	mRoot = newRoot;
 }
@@ -741,7 +748,7 @@ std::string b_plus_tree::trim(std::string str) {
 
 int main()
 {
-	b_plus_tree tree("D:\\CBVeLuMe\\Desktop\\WorkNote\\algorithm-concepts\\BPlusTree\\temp.txt");
+	b_plus_tree tree("C:\\Users\\CBVeLuMe\\source\\repos\\ConsoleApplication2\\temp.txt");
 	tree.traverse_leaf();
 	tree.traverse_all();
 	//tree.query("123131-077");
