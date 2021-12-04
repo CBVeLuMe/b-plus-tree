@@ -1,0 +1,5 @@
+﻿  CppCLR_WinformsProjekt.cpp
+C:\Users\mhenriques\source\repos\bPlussTreeProject\bPlussTreeProject\Form1.h(351,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\mhenriques\source\repos\bPlussTreeProject\bPlussTreeProject\Form1.h(516,34): warning C4101: 'oor': unreferenced local variable
+  AssemblyInfo.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+  bPlussTreeProject.vcxproj -> C:\Users\mhenriques\source\repos\bPlussTreeProject\Debug\bPlussTreeProject.exe

@@ -1,0 +1,739 @@
+  DevExpress.Sparkline.LocalizationRes.resources - Embedded, ContainedInManifestFile, 
+  DevExpress.Sparkline.PropertyNamesRes.resources - Embedded, ContainedInManifestFile, 
+  DevExpress.Sparkline.Descriptions.resources - Embedded, ContainedInManifestFile, 
+ImageRuntimeVersion: v4.0.30319
+Assembly DevExpress.Sparkline.v19.2.Core, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a: 
+	hash=SHA1, flags=PublicKey
+Assembly mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly DevExpress.Data.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a: 
+	hash=None, flags=None
+Assembly System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a: 
+	hash=None, flags=None
+Class DevExpress.ChartRangeControlClient.Core.BindingSourceClientSeries: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    DevExpress.ChartRangeControlClient.Core.IClientSeries
+    DevExpress.Sparkline.Core.ISparklineExtendedData
+    DevExpress.Sparkline.Core.ISparklineSettings
+  Properties:
+    System.Windows.Forms.Padding Padding 'get set' : 
+    DevExpress.Sparkline.SparklineViewBase View 'get set' : 
+    System.Collections.Generic.List`1[DevExpress.Sparkline.SparklinePoint] Points 'get ' : 
+  Methods:
+    get_Padding(): PrivateScope, Public, HideBySig, SpecialName
+    set_Padding(Padding): PrivateScope, Public, HideBySig, SpecialName
+    get_View(): PrivateScope, Public, HideBySig, SpecialName
+    set_View(SparklineViewBase): PrivateScope, Public, HideBySig, SpecialName
+    get_Points(): PrivateScope, Public, HideBySig, SpecialName
+Class DevExpress.ChartRangeControlClient.Core.BindingSource: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(DevExpress.Sparkline.Core.SparklineScaleType, DevExpress.ChartRangeControlClient.Core.IBindingSourceDelegate): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.IDisposable
+  Properties:
+    Boolean IsDisposed 'get ' : 
+    DevExpress.Data.Browsing.DataContextBase DataContext 'get ' : 
+    System.Object ItemsSource 'get set' : 
+    System.String SeriesDataMember 'get set' : 
+    System.String ArgumentDataMember 'get set' : 
+    System.String ValueDataMember 'get set' : 
+    DevExpress.Sparkline.Core.SparklineScaleType ScaleType 'get ' : 
+  Methods:
+    get_IsDisposed(): PrivateScope, Public, HideBySig, SpecialName
+    get_DataContext(): PrivateScope, Public, HideBySig, SpecialName
+    get_ItemsSource(): PrivateScope, Public, HideBySig, SpecialName
+    set_ItemsSource(Object): PrivateScope, Public, HideBySig, SpecialName
+    get_SeriesDataMember(): PrivateScope, Public, HideBySig, SpecialName
+    set_SeriesDataMember(String): PrivateScope, Public, HideBySig, SpecialName
+    get_ArgumentDataMember(): PrivateScope, Public, HideBySig, SpecialName
+    set_ArgumentDataMember(String): PrivateScope, Public, HideBySig, SpecialName
+    get_ValueDataMember(): PrivateScope, Public, HideBySig, SpecialName
+    set_ValueDataMember(String): PrivateScope, Public, HideBySig, SpecialName
+    get_ScaleType(): PrivateScope, Public, HideBySig, SpecialName
+    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    GetSeries(): PrivateScope, Public, HideBySig
+    RefreshData(): PrivateScope, Public, HideBySig
+Class DevExpress.ChartRangeControlClient.Core.GridUnit: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(Double, Double): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Double Spacing 'get set' : 
+    Double Unit 'get set' : 
+    Double Step 'get ' : 
+  Methods:
+    get_Spacing(): PrivateScope, Public, HideBySig, SpecialName
+    set_Spacing(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_Unit(): PrivateScope, Public, HideBySig, SpecialName
+    set_Unit(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_Step(): PrivateScope, Public, HideBySig, SpecialName
+Class DevExpress.ChartRangeControlClient.Core.SeriesProviderPair: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+    Void .ctor(DevExpress.ChartRangeControlClient.Core.IClientSeries, DevExpress.Sparkline.Core.SparklineDataProvider): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    DevExpress.ChartRangeControlClient.Core.IClientSeries Series 'get ' : 
+    DevExpress.Sparkline.Core.SparklineDataProvider DataProvider 'get ' : 
+  Methods:
+    get_Series(): PrivateScope, Public, HideBySig, SpecialName
+    get_DataProvider(): PrivateScope, Public, HideBySig, SpecialName
+Class DevExpress.ChartRangeControlClient.Core.SeriesInteraction: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int32 Count 'get ' : 
+    Boolean HasDataToPresent 'get ' : 
+    DevExpress.Sparkline.Core.SparklineInteractionRanges Ranges 'get ' : 
+    DevExpress.ChartRangeControlClient.Core.SeriesProviderPair Item [Int32] 'get ' : 
+  Methods:
+    get_Count(): PrivateScope, Public, HideBySig, SpecialName
+    get_HasDataToPresent(): PrivateScope, Public, HideBySig, SpecialName
+    get_Ranges(): PrivateScope, Public, HideBySig, SpecialName
+    Clear(): PrivateScope, Public, HideBySig
+    Add(IClientSeries): PrivateScope, Public, HideBySig
+    get_Item(Int32): PrivateScope, Public, HideBySig, SpecialName
+    NormalizeArgument(Double): PrivateScope, Public, HideBySig
+    GetArgument(Double): PrivateScope, Public, HideBySig
+Struct DevExpress.ChartRangeControlClient.Core.SnapBounds: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    DevExpress.ChartRangeControlClient.Core.SnapBounds None = 0 : Public, Static, Literal, HasDefault
+    DevExpress.ChartRangeControlClient.Core.SnapBounds Minimum = 1 : Public, Static, Literal, HasDefault
+    DevExpress.ChartRangeControlClient.Core.SnapBounds Maximum = 2 : Public, Static, Literal, HasDefault
+    DevExpress.ChartRangeControlClient.Core.SnapBounds Both = 3 : Public, Static, Literal, HasDefault
+Class DevExpress.ChartRangeControlClient.Core.ChartCoreClient: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    DevExpress.ChartRangeControlClient.Core.IClientDataProvider DataProvider 'get set' : 
+    Boolean HasDataToPresent 'get ' : 
+    DevExpress.ChartRangeControlClient.Core.SeriesInteraction Interaction 'get ' : 
+    DevExpress.ChartRangeControlClient.Core.IChartCoreClientDelegate Delegate 'get set' : 
+  Methods:
+    get_DataProvider(): PrivateScope, Public, HideBySig, SpecialName
+    set_DataProvider(IClientDataProvider): PrivateScope, Public, HideBySig, SpecialName
+    get_HasDataToPresent(): PrivateScope, Public, HideBySig, SpecialName
+    get_Interaction(): PrivateScope, Public, HideBySig, SpecialName
+    get_Delegate(): PrivateScope, Public, HideBySig, SpecialName
+    set_Delegate(IChartCoreClientDelegate): PrivateScope, Public, HideBySig, SpecialName
+    DrawContent(IGraphicsCache, Rectangle, Matrix): PrivateScope, Public, HideBySig
+    DrawContent(Graphics, Rectangle, Matrix): PrivateScope, Public, HideBySig
+    Normalize(Double): PrivateScope, Public, HideBySig
+    GetValue(Double): PrivateScope, Public, HideBySig
+    GenerateGrid(Double, Double, Double, IChartCoreClientGridOptions): PrivateScope, Public, HideBySig
+    SnapNormalRange(SparklineRangeData, SnapBounds, IChartCoreClientGridOptions): PrivateScope, Public, HideBySig
+    SetCustomArgumentRange(SparklineRangeData): PrivateScope, Public, HideBySig
+Interface DevExpress.ChartRangeControlClient.Core.IClientSeries: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Interfaces:
+    DevExpress.Sparkline.Core.ISparklineExtendedData
+    DevExpress.Sparkline.Core.ISparklineSettings
+Class DevExpress.ChartRangeControlClient.Core.DataChangedDelegate: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.MulticastDelegate
+    Void .ctor(System.Object, IntPtr): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Invoke(IClientDataProvider): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    BeginInvoke(IClientDataProvider, AsyncCallback, Object): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    EndInvoke(IAsyncResult): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+Interface DevExpress.ChartRangeControlClient.Core.IClientDataProvider: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Properties:
+    System.Collections.Generic.IList`1[DevExpress.ChartRangeControlClient.Core.IClientSeries] Series 'get ' : 
+  Methods:
+    get_Series(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    SetDataChangedDelegate(DataChangedDelegate): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+Interface DevExpress.ChartRangeControlClient.Core.IBindingSourceDelegate: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Methods:
+    BindingChanged(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    AdjustSeries(Object, BindingSourceClientSeries, Int32): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+Interface DevExpress.ChartRangeControlClient.Core.IChartCoreClientDelegate: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Methods:
+    InteractionUpdated(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+Interface DevExpress.ChartRangeControlClient.Core.IChartCoreClientGridOptions: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Properties:
+    Boolean Auto 'get ' : 
+    DevExpress.ChartRangeControlClient.Core.GridUnit GridUnit 'get ' : 
+    DevExpress.ChartRangeControlClient.Core.GridUnit SnapUnit 'get ' : 
+    Double PixelPerUnit 'get ' : 
+    DevExpress.ChartRangeControlClient.Core.IChartCoreClientGridMapping GridMapping 'get ' : 
+  Methods:
+    get_Auto(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_GridUnit(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_SnapUnit(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_PixelPerUnit(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_GridMapping(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+Interface DevExpress.ChartRangeControlClient.Core.IChartCoreClientGridMapping: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Methods:
+    SelectGridUnit(Double): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    CeilValue(GridUnit, Double): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    FloorValue(GridUnit, Double): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    GetGridValue(GridUnit, Double): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+Class DevExpress.Sparkline.SparklineRange: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(Double, Double): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Double Limit1 'get set' : 
+    Double Limit2 'get set' : 
+    Boolean IsAuto 'get set' : 
+  Events:
+    System.EventHandler PropertiesChanged: 
+  Methods:
+    add_PropertiesChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_PropertiesChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    get_Limit1(): PrivateScope, Public, HideBySig, SpecialName
+    set_Limit1(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_Limit2(): PrivateScope, Public, HideBySig, SpecialName
+    set_Limit2(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_IsAuto(): PrivateScope, Public, HideBySig, SpecialName
+    set_IsAuto(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    ToString(): PrivateScope, Public, Virtual, HideBySig
+Class DevExpress.Sparkline.SparklinePoint: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(Double, Double): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Double Argument 'get set' : 
+    Double Value 'get set' : 
+  Methods:
+    get_Argument(): PrivateScope, Public, HideBySig, SpecialName
+    set_Argument(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_Value(): PrivateScope, Public, HideBySig, SpecialName
+    set_Value(Double): PrivateScope, Public, HideBySig, SpecialName
+    ToString(): PrivateScope, Public, Virtual, HideBySig
+Class DevExpress.Sparkline.AreaSparklineView: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :DevExpress.Sparkline.LineSparklineView
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    DevExpress.Data.Export.IAreaSparklineInfo
+  Properties:
+    Byte AreaOpacity 'get set' : 
+    DevExpress.Sparkline.SparklineViewType Type 'get ' : 
+  Methods:
+    get_AreaOpacity(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    set_AreaOpacity(Byte): PrivateScope, Public, HideBySig, SpecialName
+    get_Type(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    Assign(SparklineViewBase): PrivateScope, Public, Virtual, HideBySig
+    Visit(ISparklineViewVisitor): PrivateScope, Public, Virtual, HideBySig
+Class DevExpress.Sparkline.BarSparklineViewBase: AutoLayout, AnsiClass, Class, Public, Abstract, BeforeFieldInit
+  :DevExpress.Sparkline.SparklineViewBase
+  Properties:
+    Int32 BarDistance 'get set' : 
+  Methods:
+    get_BarDistance(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    set_BarDistance(Int32): PrivateScope, Public, HideBySig, SpecialName
+    Assign(SparklineViewBase): PrivateScope, Public, Virtual, HideBySig
+Class DevExpress.Sparkline.BarSparklineView: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :DevExpress.Sparkline.BarSparklineViewBase
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    DevExpress.Data.Export.IBarSparklineInfo
+  Properties:
+    DevExpress.Sparkline.SparklineViewType Type 'get ' : 
+  Methods:
+    get_Type(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    Visit(ISparklineViewVisitor): PrivateScope, Public, Virtual, HideBySig
+Struct DevExpress.Sparkline.SparklineViewType: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    DevExpress.Sparkline.SparklineViewType Line = 0 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.SparklineViewType Area = 1 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.SparklineViewType Bar = 2 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.SparklineViewType WinLoss = 3 : Public, Static, Literal, HasDefault
+Interface DevExpress.Sparkline.ISparklineViewVisitor: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Methods:
+    Visit(LineSparklineView): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    Visit(AreaSparklineView): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    Visit(BarSparklineView): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    Visit(WinLossSparklineView): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+Class DevExpress.Sparkline.WinLossSparklineView: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :DevExpress.Sparkline.BarSparklineViewBase
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    DevExpress.Data.Export.IBarSparklineInfo
+  Properties:
+    DevExpress.Sparkline.SparklineViewType Type 'get ' : 
+  Methods:
+    get_Type(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    Visit(ISparklineViewVisitor): PrivateScope, Public, Virtual, HideBySig
+Class DevExpress.Sparkline.SparklineViewBase: AutoLayout, AnsiClass, Class, Public, Abstract, BeforeFieldInit
+  Interfaces:
+    DevExpress.Utils.Serializing.Helpers.IXtraSupportShouldSerialize
+    DevExpress.Data.Export.ISparklineInfo
+  Properties:
+    System.Drawing.Color ActualColor 'get ' : 
+    System.Drawing.Color ActualMaxPointColor 'get ' : 
+    System.Drawing.Color ActualMinPointColor 'get ' : 
+    System.Drawing.Color ActualStartPointColor 'get ' : 
+    System.Drawing.Color ActualEndPointColor 'get ' : 
+    System.Drawing.Color ActualNegativePointColor 'get ' : 
+    DevExpress.Sparkline.SparklineViewType Type 'get ' : 
+    Boolean HighlightNegativePoints 'get set' : 
+    Boolean HighlightMaxPoint 'get set' : 
+    Boolean HighlightMinPoint 'get set' : 
+    Boolean HighlightStartPoint 'get set' : 
+    Boolean HighlightEndPoint 'get set' : 
+    System.Drawing.Color Color 'get set' : 
+    System.Drawing.Color MaxPointColor 'get set' : 
+    System.Drawing.Color MinPointColor 'get set' : 
+    System.Drawing.Color StartPointColor 'get set' : 
+    System.Drawing.Color EndPointColor 'get set' : 
+    System.Drawing.Color NegativePointColor 'get set' : 
+  Events:
+    System.EventHandler PropertiesChanged: 
+  Methods:
+    CreateView(SparklineViewType): PrivateScope, Public, Static, HideBySig
+    add_PropertiesChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_PropertiesChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    get_ActualColor(): PrivateScope, Public, HideBySig, SpecialName
+    get_ActualMaxPointColor(): PrivateScope, Public, HideBySig, SpecialName
+    get_ActualMinPointColor(): PrivateScope, Public, HideBySig, SpecialName
+    get_ActualStartPointColor(): PrivateScope, Public, HideBySig, SpecialName
+    get_ActualEndPointColor(): PrivateScope, Public, HideBySig, SpecialName
+    get_ActualNegativePointColor(): PrivateScope, Public, HideBySig, SpecialName
+    get_Type(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_HighlightNegativePoints(): PrivateScope, Public, HideBySig, SpecialName
+    set_HighlightNegativePoints(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_HighlightMaxPoint(): PrivateScope, Public, HideBySig, SpecialName
+    set_HighlightMaxPoint(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_HighlightMinPoint(): PrivateScope, Public, HideBySig, SpecialName
+    set_HighlightMinPoint(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_HighlightStartPoint(): PrivateScope, Public, HideBySig, SpecialName
+    set_HighlightStartPoint(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_HighlightEndPoint(): PrivateScope, Public, HideBySig, SpecialName
+    set_HighlightEndPoint(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_Color(): PrivateScope, Public, HideBySig, SpecialName
+    set_Color(Color): PrivateScope, Public, HideBySig, SpecialName
+    get_MaxPointColor(): PrivateScope, Public, HideBySig, SpecialName
+    set_MaxPointColor(Color): PrivateScope, Public, HideBySig, SpecialName
+    get_MinPointColor(): PrivateScope, Public, HideBySig, SpecialName
+    set_MinPointColor(Color): PrivateScope, Public, HideBySig, SpecialName
+    get_StartPointColor(): PrivateScope, Public, HideBySig, SpecialName
+    set_StartPointColor(Color): PrivateScope, Public, HideBySig, SpecialName
+    get_EndPointColor(): PrivateScope, Public, HideBySig, SpecialName
+    set_EndPointColor(Color): PrivateScope, Public, HideBySig, SpecialName
+    get_NegativePointColor(): PrivateScope, Public, HideBySig, SpecialName
+    set_NegativePointColor(Color): PrivateScope, Public, HideBySig, SpecialName
+    Assign(SparklineViewBase): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    ToString(): PrivateScope, Public, Virtual, HideBySig
+    Visit(ISparklineViewVisitor): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+Class DevExpress.Sparkline.LineSparklineView: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :DevExpress.Sparkline.SparklineViewBase
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    DevExpress.Data.Export.ILineSparklineAdditionalInfo
+  Properties:
+    System.Drawing.Color ActualMarkerColor 'get ' : 
+    Int32 ActualMarkerSize 'get ' : 
+    Int32 ActualMinPointMarkerSize 'get ' : 
+    Int32 ActualEndPointMarkerSize 'get ' : 
+    Int32 ActualMaxPointMarkerSize 'get ' : 
+    Int32 ActualNegativePointMarkerSize 'get ' : 
+    Int32 ActualStartPointMarkerSize 'get ' : 
+    Int32 ActualLineWidth 'get ' : 
+    Single ScaleFactor 'get set' : 
+    Int32 LineWidth 'get set' : 
+    Boolean ShowMarkers 'get set' : 
+    Int32 MarkerSize 'get set' : 
+    Int32 MaxPointMarkerSize 'get set' : 
+    Int32 MinPointMarkerSize 'get set' : 
+    Int32 StartPointMarkerSize 'get set' : 
+    Int32 EndPointMarkerSize 'get set' : 
+    Int32 NegativePointMarkerSize 'get set' : 
+    System.Drawing.Color MarkerColor 'get set' : 
+    Boolean EnableAntialiasing 'get set' : 
+    DevExpress.Sparkline.SparklineViewType Type 'get ' : 
+  Methods:
+    get_ActualMarkerColor(): PrivateScope, Public, HideBySig, SpecialName
+    get_ActualMarkerSize(): PrivateScope, Public, HideBySig, SpecialName
+    get_ActualMinPointMarkerSize(): PrivateScope, Public, HideBySig, SpecialName
+    get_ActualEndPointMarkerSize(): PrivateScope, Public, HideBySig, SpecialName
+    get_ActualMaxPointMarkerSize(): PrivateScope, Public, HideBySig, SpecialName
+    get_ActualNegativePointMarkerSize(): PrivateScope, Public, HideBySig, SpecialName
+    get_ActualStartPointMarkerSize(): PrivateScope, Public, HideBySig, SpecialName
+    get_ActualLineWidth(): PrivateScope, Public, HideBySig, SpecialName
+    get_ScaleFactor(): PrivateScope, Public, HideBySig, SpecialName
+    set_ScaleFactor(Single): PrivateScope, Public, HideBySig, SpecialName
+    get_LineWidth(): PrivateScope, Public, HideBySig, SpecialName
+    set_LineWidth(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_ShowMarkers(): PrivateScope, Public, HideBySig, SpecialName
+    set_ShowMarkers(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_MarkerSize(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    set_MarkerSize(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_MaxPointMarkerSize(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    set_MaxPointMarkerSize(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_MinPointMarkerSize(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    set_MinPointMarkerSize(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_StartPointMarkerSize(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    set_StartPointMarkerSize(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_EndPointMarkerSize(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    set_EndPointMarkerSize(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_NegativePointMarkerSize(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    set_NegativePointMarkerSize(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_MarkerColor(): PrivateScope, Public, HideBySig, SpecialName
+    set_MarkerColor(Color): PrivateScope, Public, HideBySig, SpecialName
+    get_EnableAntialiasing(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    set_EnableAntialiasing(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_Type(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    SetSizeForAllMarkers(Int32): PrivateScope, Public, HideBySig
+    Assign(SparklineViewBase): PrivateScope, Public, Virtual, HideBySig
+    Visit(ISparklineViewVisitor): PrivateScope, Public, Virtual, HideBySig
+Struct DevExpress.Sparkline.Localization.SparklineStringId: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    DevExpress.Sparkline.Localization.SparklineStringId viewLine = 0 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Localization.SparklineStringId viewArea = 1 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Localization.SparklineStringId viewBar = 2 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Localization.SparklineStringId viewWinLoss = 3 : Public, Static, Literal, HasDefault
+Class DevExpress.Sparkline.Localization.SparklineLocalizationHelper: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Methods:
+    GetSparklineViewName(SparklineViewType): PrivateScope, Public, Static, HideBySig
+Class DevExpress.Sparkline.Localization.SparklineResLocalizer: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :DevExpress.Utils.Localization.XtraResXLocalizer`1[DevExpress.Sparkline.Localization.SparklineStringId]
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+Class DevExpress.Sparkline.Localization.SparklineLocalizer: AutoLayout, AnsiClass, Class, Public
+  :DevExpress.Utils.Localization.XtraLocalizer`1[DevExpress.Sparkline.Localization.SparklineStringId]
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    DevExpress.Utils.Localization.XtraLocalizer`1[DevExpress.Sparkline.Localization.SparklineStringId] Active 'get set' : 
+  Methods:
+    get_Active(): PrivateScope, Public, Static, HideBySig, SpecialName
+    set_Active(XtraLocalizer`1): PrivateScope, Public, Static, HideBySig, SpecialName
+    CreateDefaultLocalizer(): PrivateScope, Public, Static, HideBySig
+    GetString(SparklineStringId): PrivateScope, Public, Static, HideBySig
+    CreateResXLocalizer(): PrivateScope, Public, Virtual, HideBySig
+Interface DevExpress.Sparkline.Core.ISparklineAppearanceProvider: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Properties:
+    System.Drawing.Color Color 'get ' : 
+    System.Drawing.Color MarkerColor 'get ' : 
+    System.Drawing.Color MaxPointColor 'get ' : 
+    System.Drawing.Color MinPointColor 'get ' : 
+    System.Drawing.Color StartPointColor 'get ' : 
+    System.Drawing.Color EndPointColor 'get ' : 
+    System.Drawing.Color NegativePointColor 'get ' : 
+  Methods:
+    get_Color(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_MarkerColor(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_MaxPointColor(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_MinPointColor(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_StartPointColor(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_EndPointColor(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_NegativePointColor(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+Class DevExpress.Sparkline.Core.SparklineAppearanceHelper: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Methods:
+    SetSparklineAppearanceProvider(SparklineViewBase, ISparklineAppearanceProvider): PrivateScope, Public, Static, HideBySig
+    GetSparklineAppearanceProvider(SparklineViewBase): PrivateScope, Public, Static, HideBySig
+Class DevExpress.Sparkline.Core.SparklineRangeData: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(Double, Double): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Double Min 'get ' : 
+    Double Max 'get ' : 
+    Double Delta 'get ' : 
+    Boolean IsValid 'get ' : 
+  Methods:
+    get_Min(): PrivateScope, Public, HideBySig, SpecialName
+    get_Max(): PrivateScope, Public, HideBySig, SpecialName
+    get_Delta(): PrivateScope, Public, HideBySig, SpecialName
+    get_IsValid(): PrivateScope, Public, HideBySig, SpecialName
+    Set(Double, Double): PrivateScope, Public, HideBySig
+    InRange(Double): PrivateScope, Public, HideBySig
+    ToString(): PrivateScope, Public, Virtual, HideBySig
+Class DevExpress.Sparkline.Core.SparklineInteractionRanges: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  Properties:
+    DevExpress.Sparkline.Core.SparklineRangeData ActualDataArgumentRange 'get ' : 
+    DevExpress.Sparkline.Core.SparklineRangeData DataArgumentRange 'get ' : 
+    DevExpress.Sparkline.Core.SparklineRangeData DataValueRange 'get ' : 
+    DevExpress.Sparkline.Core.SparklineRangeData VisualArgumentRange 'get ' : 
+    DevExpress.Sparkline.Core.SparklineRangeData CustomDataArgumentRange 'get ' : 
+    Double MinPointDistance 'get ' : 
+  Methods:
+    get_ActualDataArgumentRange(): PrivateScope, Public, HideBySig, SpecialName
+    get_DataArgumentRange(): PrivateScope, Public, HideBySig, SpecialName
+    get_DataValueRange(): PrivateScope, Public, HideBySig, SpecialName
+    get_VisualArgumentRange(): PrivateScope, Public, HideBySig, SpecialName
+    get_CustomDataArgumentRange(): PrivateScope, Public, HideBySig, SpecialName
+    get_MinPointDistance(): PrivateScope, Public, HideBySig, SpecialName
+Class DevExpress.Sparkline.Core.SparklineIndexRange: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  Properties:
+    Int32 Min  'get set' : 
+    Int32 Max  'get set' : 
+    Boolean IsValid 'get ' : 
+  Methods:
+    get_Min(): PrivateScope, Public, HideBySig, SpecialName
+    set_Min(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_Max(): PrivateScope, Public, HideBySig, SpecialName
+    set_Max(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_IsValid(): PrivateScope, Public, HideBySig, SpecialName
+    ToString(): PrivateScope, Public, Virtual, HideBySig
+Class DevExpress.Sparkline.Core.SparklineViewPainterFactory: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    DevExpress.Sparkline.ISparklineViewVisitor
+  Methods:
+    Create(SparklineViewBase): PrivateScope, Public, Static, HideBySig
+    Visit(LineSparklineView): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    Visit(AreaSparklineView): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    Visit(BarSparklineView): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    Visit(WinLossSparklineView): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+Class DevExpress.Sparkline.Core.DirectXSparklineRenderer: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(DevExpress.Utils.Drawing.IGraphicsCache): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    DevExpress.Sparkline.Core.ISparklineRenderer
+    System.IDisposable
+Class DevExpress.Sparkline.Core.EmfPlusSparklineRenderer: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :DevExpress.Emf.EmfPlusRenderer
+    Void .ctor(DevExpress.Emf.IEmfMetafileBuilder): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    DevExpress.Sparkline.Core.ISparklineRenderer
+    System.IDisposable
+  Methods:
+    SetAntialiasingMode(SmoothingMode): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    RestoreAntialiasingMode(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    SetClip(Rectangle): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    FillPolygon(PointF[], Color): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    FillEllipse(Single, Single, Single, Single, Color): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    FillRectangle(Single, Single, Single, Single, Color): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    DrawLine(PointF, PointF, Color, Int32): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    DrawLines(PointF[], Color, Int32): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+Class DevExpress.Sparkline.Core.GdiPlusSparklineRenderer: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(System.Drawing.Graphics, DevExpress.Utils.Drawing.IGraphicsCache): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    DevExpress.Sparkline.Core.ISparklineRenderer
+    System.IDisposable
+Interface DevExpress.Sparkline.Core.ISparklineRenderer: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Interfaces:
+    System.IDisposable
+  Methods:
+    SetAntialiasingMode(SmoothingMode): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    RestoreAntialiasingMode(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    SetClip(Rectangle): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    RestoreClip(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    FillPolygon(PointF[], Color): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    FillEllipse(Single, Single, Single, Single, Color): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    FillRectangle(Single, Single, Single, Single, Color): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    DrawLine(PointF, PointF, Color, Int32): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    DrawLines(PointF[], Color, Int32): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+Interface DevExpress.Sparkline.Core.ISparklineSettings: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Properties:
+    System.Windows.Forms.Padding Padding 'get ' : 
+    DevExpress.Sparkline.SparklineViewBase View 'get ' : 
+    DevExpress.Sparkline.SparklineRange ValueRange 'get ' : 
+  Methods:
+    get_Padding(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_View(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_ValueRange(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+Struct DevExpress.Sparkline.Core.SparklineScaleType: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    DevExpress.Sparkline.Core.SparklineScaleType Numeric = 0 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Core.SparklineScaleType DateTime = 1 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Core.SparklineScaleType TimeSpan = 2 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Core.SparklineScaleType Unknown = 3 : Public, Static, Literal, HasDefault
+Interface DevExpress.Sparkline.Core.ISparklineData: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Properties:
+    System.Collections.Generic.IList`1[System.Double] Values 'get ' : 
+  Methods:
+    get_Values(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+Interface DevExpress.Sparkline.Core.ISparklineExtendedData: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Properties:
+    System.Collections.Generic.IList`1[DevExpress.Sparkline.SparklinePoint] Points 'get ' : 
+  Methods:
+    get_Points(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+Class DevExpress.Sparkline.Core.RuntimeObjectAttribute: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Attribute
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+Class DevExpress.Sparkline.Core.SparklinePointArgumentComparer: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.Collections.Generic.IComparer`1[DevExpress.Sparkline.SparklinePoint]
+  Methods:
+    Compare(SparklinePoint, SparklinePoint): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+Class DevExpress.Sparkline.Core.SparklinePointArgumentAndIndexComparer: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.Collections.Generic.IComparer`1[DevExpress.Sparkline.SparklinePoint]
+  Methods:
+    Compare(SparklinePoint, SparklinePoint): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+Class DevExpress.Sparkline.Core.SparklineDataWrapper: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(DevExpress.Sparkline.Core.ISparklineData): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(System.Collections.Generic.IList`1[System.Double]): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    DevExpress.Sparkline.Core.ISparklineExtendedData
+  Properties:
+    System.Collections.Generic.IList`1[DevExpress.Sparkline.SparklinePoint] Points 'get ' : 
+    DevExpress.Sparkline.Core.SparklineRangeData Range 'get set' : 
+  Methods:
+    get_Points(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_Range(): PrivateScope, Public, HideBySig, SpecialName
+    set_Range(SparklineRangeData): PrivateScope, Public, HideBySig, SpecialName
+Class DevExpress.Sparkline.Core.BarSparklineMapping: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :DevExpress.Sparkline.Core.SparklineMappingBase
+Class DevExpress.Sparkline.Core.SparklineMappingBase: AutoLayout, AnsiClass, Class, Public, Abstract, BeforeFieldInit
+  Properties:
+    Int32 ScreenYZeroValue 'get ' : 
+    Double MinPointsDistancePx 'get ' : 
+    Double ScaleX 'get ' : 
+    System.Drawing.Rectangle Bounds 'get ' : 
+    DevExpress.Sparkline.Core.SparklineRangeData ValueRange 'get ' : 
+  Methods:
+    Create(SparklineViewType, Rectangle, SparklineDataProvider): PrivateScope, Public, Static, HideBySig
+    Create(SparklineViewType, Rectangle, SparklineDataProvider, SparklineInteractionRanges, Matrix): PrivateScope, Public, Static, HideBySig
+    get_ScreenYZeroValue(): PrivateScope, Public, HideBySig, SpecialName
+    get_MinPointsDistancePx(): PrivateScope, Public, HideBySig, SpecialName
+    get_ScaleX(): PrivateScope, Public, HideBySig, SpecialName
+    get_Bounds(): PrivateScope, Public, HideBySig, SpecialName
+    get_ValueRange(): PrivateScope, Public, HideBySig, SpecialName
+    IsMinValuePoint(Double): PrivateScope, Public, HideBySig
+    IsMaxValuePoint(Double): PrivateScope, Public, HideBySig
+    IsStartPoint(Double): PrivateScope, Public, HideBySig
+    IsEndPoint(Double): PrivateScope, Public, HideBySig
+    MapYValueToScreen(Double): PrivateScope, Public, HideBySig
+    MapXValueToScreen(Double): PrivateScope, Public, HideBySig
+    MapPoint(Double, Double): PrivateScope, Public, HideBySig
+    MapPointF(Double, Double): PrivateScope, Public, HideBySig
+Class DevExpress.Sparkline.Core.LineSparklineMapping: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :DevExpress.Sparkline.Core.SparklineMappingBase
+Class DevExpress.Sparkline.Core.WinLossSparklineMapping: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :DevExpress.Sparkline.Core.BarSparklineMapping
+Class DevExpress.Sparkline.Core.AreaSparklinePainter: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :DevExpress.Sparkline.Core.LineSparklinePainter
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    DevExpress.Sparkline.SparklineViewType SparklineType 'get ' : 
+  Methods:
+    get_SparklineType(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+Class DevExpress.Sparkline.Core.BarSparklinePainter: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :DevExpress.Sparkline.Core.BaseSparklinePainter
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    DevExpress.Sparkline.SparklineViewType SparklineType 'get ' : 
+  Methods:
+    get_SparklineType(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    GetMappedPoints(): PrivateScope, Public, Virtual, HideBySig
+Struct DevExpress.Sparkline.Core.PointPresentationType: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    DevExpress.Sparkline.Core.PointPresentationType HighPoint = 0 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Core.PointPresentationType LowPoint = 1 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Core.PointPresentationType StartPoint = 2 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Core.PointPresentationType EndPoint = 3 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Core.PointPresentationType NegativePoint = 4 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Core.PointPresentationType SimplePoint = 5 : Public, Static, Literal, HasDefault
+Class DevExpress.Sparkline.Core.BaseSparklinePainter: AutoLayout, AnsiClass, Class, Public, Abstract, BeforeFieldInit
+  Properties:
+    DevExpress.Sparkline.SparklineViewType SparklineType 'get ' : 
+    System.Collections.Generic.List`1[DevExpress.Sparkline.Core.SparklineMappedPointInfo] MappedPoints 'get set' : 
+  Methods:
+    get_SparklineType(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_MappedPoints(): PrivateScope, Public, HideBySig, SpecialName
+    set_MappedPoints(List`1): PrivateScope, Public, HideBySig, SpecialName
+    GetMappedPoints(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    Initialize(ISparklineData, ISparklineSettings, Rectangle): PrivateScope, Public, HideBySig
+    Initialize(SparklineDataProvider, ISparklineSettings, Rectangle, SparklineInteractionRanges, Matrix): PrivateScope, Public, HideBySig
+    Draw(Graphics, IGraphicsCache): PrivateScope, Public, HideBySig
+    ExportToMetafileModel(): PrivateScope, Public, HideBySig
+Class DevExpress.Sparkline.Core.SparklineMappedPointInfo: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    System.Drawing.PointF Point 'get set' : 
+    Int32 Index 'get set' : 
+  Methods:
+    get_Point(): PrivateScope, Public, HideBySig, SpecialName
+    set_Point(PointF): PrivateScope, Public, HideBySig, SpecialName
+    get_Index(): PrivateScope, Public, HideBySig, SpecialName
+    set_Index(Int32): PrivateScope, Public, HideBySig, SpecialName
+Class DevExpress.Sparkline.Core.LineSparklinePainter: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :DevExpress.Sparkline.Core.BaseSparklinePainter
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    DevExpress.Sparkline.SparklineViewType SparklineType 'get ' : 
+  Methods:
+    get_SparklineType(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    GetMappedPoints(): PrivateScope, Public, Virtual, HideBySig
+Class DevExpress.Sparkline.Core.WinLossSparklinePainter: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :DevExpress.Sparkline.Core.BarSparklinePainter
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    DevExpress.Sparkline.SparklineViewType SparklineType 'get ' : 
+  Methods:
+    get_SparklineType(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+Class DevExpress.Sparkline.Core.SparklineDrawingCache: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.IDisposable
+  Methods:
+    GetSolidBrush(Color): PrivateScope, Public, HideBySig
+    GetPen(Color): PrivateScope, Public, HideBySig
+    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+Class DevExpress.Sparkline.Core.SparklinePaintersCache: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    GetPainter(SparklineViewBase): PrivateScope, Public, HideBySig
+Class DevExpress.Sparkline.Core.SparklineDataProvider: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(DevExpress.Sparkline.Core.ISparklineExtendedData): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(DevExpress.Sparkline.Core.ISparklineExtendedData, DevExpress.Sparkline.Core.SparklineRangeData): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    DevExpress.Sparkline.Core.ISparklineExtendedData Data 'get ' : 
+    System.Collections.Generic.List`1[DevExpress.Sparkline.SparklinePoint] SortedPoints 'get ' : 
+    DevExpress.Sparkline.Core.SparklineIndexRange FilteredPointRange 'get ' : 
+    DevExpress.Sparkline.Core.SparklineRangeData DataArgumentRange 'get ' : 
+    DevExpress.Sparkline.Core.SparklineRangeData FilterRange 'get ' : 
+    DevExpress.Sparkline.Core.SparklineRangeData OriginalValueRange 'get ' : 
+    DevExpress.Sparkline.Core.SparklineRangeData DataValueRange 'get set' : 
+    Boolean AllowPaddingCorrection 'get set' : 
+  Methods:
+    get_Data(): PrivateScope, Public, HideBySig, SpecialName
+    get_SortedPoints(): PrivateScope, Public, HideBySig, SpecialName
+    get_FilteredPointRange(): PrivateScope, Public, HideBySig, SpecialName
+    get_DataArgumentRange(): PrivateScope, Public, HideBySig, SpecialName
+    get_FilterRange(): PrivateScope, Public, HideBySig, SpecialName
+    get_OriginalValueRange(): PrivateScope, Public, HideBySig, SpecialName
+    get_DataValueRange(): PrivateScope, Public, HideBySig, SpecialName
+    set_DataValueRange(SparklineRangeData): PrivateScope, Public, HideBySig, SpecialName
+    get_AllowPaddingCorrection(): PrivateScope, Public, HideBySig, SpecialName
+    set_AllowPaddingCorrection(Boolean): PrivateScope, Public, HideBySig, SpecialName
+Class DevExpress.Sparkline.Core.SparklineMathUtils: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Methods:
+    IsValidDouble(Double): PrivateScope, Public, Static, HideBySig
+    Round(Double): PrivateScope, Public, Static, HideBySig
+    AreDoublesEqual(Double, Double): PrivateScope, Public, Static, HideBySig
+Class DevExpress.Sparkline.Core.CohenSutherlandLineClipAlgorithm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(System.Drawing.Rectangle): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    GetCutLine(PointF, PointF): PrivateScope, Public, HideBySig
+Struct DevExpress.Sparkline.Core.DateTimeMeasureUnit: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    DevExpress.Sparkline.Core.DateTimeMeasureUnit Millisecond = 0 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Core.DateTimeMeasureUnit Second = 1 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Core.DateTimeMeasureUnit Minute = 2 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Core.DateTimeMeasureUnit Hour = 3 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Core.DateTimeMeasureUnit Day = 4 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Core.DateTimeMeasureUnit Week = 5 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Core.DateTimeMeasureUnit Month = 6 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Core.DateTimeMeasureUnit Quarter = 7 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Core.DateTimeMeasureUnit Year = 8 : Public, Static, Literal, HasDefault
+Struct DevExpress.Sparkline.Core.TimeSpanMeasureUnit: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    DevExpress.Sparkline.Core.TimeSpanMeasureUnit Millisecond = 0 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Core.TimeSpanMeasureUnit Second = 1 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Core.TimeSpanMeasureUnit Minute = 2 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Core.TimeSpanMeasureUnit Hour = 3 : Public, Static, Literal, HasDefault
+    DevExpress.Sparkline.Core.TimeSpanMeasureUnit Day = 4 : Public, Static, Literal, HasDefault
+Class DevExpress.Sparkline.Core.SparklineDateTimeUtils: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Methods:
+    Floor(DateTime, DateTimeMeasureUnit): PrivateScope, Public, Static, HideBySig
+    Floor(TimeSpan, TimeSpanMeasureUnit): PrivateScope, Public, Static, HideBySig
+    Add(DateTime, DateTimeMeasureUnit, Double): PrivateScope, Public, Static, HideBySig
+    Add(TimeSpan, TimeSpanMeasureUnit, Int32): PrivateScope, Public, Static, HideBySig
+    Difference(DateTime, DateTime, DateTimeMeasureUnit): PrivateScope, Public, Static, HideBySig
+    Difference(TimeSpan, TimeSpan, TimeSpanMeasureUnit): PrivateScope, Public, Static, HideBySig
+    Round(DateTime, DateTimeMeasureUnit): PrivateScope, Public, Static, HideBySig
+    Round(TimeSpan, TimeSpanMeasureUnit): PrivateScope, Public, Static, HideBySig
+    SizeOfMeasureUnit(TimeSpanMeasureUnit): PrivateScope, Public, Static, HideBySig
+    SizeOfMeasureUnit(DateTimeMeasureUnit): PrivateScope, Public, Static, HideBySig
